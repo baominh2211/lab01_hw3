@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Information System Training Camp 2025</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Montserrat:wght@700;800;900&display=swap"
+      rel="stylesheet"
+    />
+
+    <style>
+      /* ---------- Variables & Reset (light) ---------- */
+      :root{
+        --bg: #0f1724;
+        --card: #0b1220;
+        --accent: #5eead4; /* mint */
+        --muted: rgba(255,255,255,0.75);
+        --glass: rgba(255,255,255,0.04);
+        --radius: 12px;
+        --max-width: 1100px;
+        --gap: 1.25rem;
+        --accent-2: #60a5fa;
+      }
+      *{box-sizing:border-box}
+      html,body,div,span,h1,h2,h3,h4,h5,h6,p,ul,li,figure,figcaption,button,input,select,textarea{margin:0;padding:0}
+      body{
+        font-family:'Poppins',system-ui,Segoe UI,Roboto,Arial;
+        background:linear-gradient(180deg,#071023 0%, #071326 100%);
+        color:#e6eef8;
+        -webkit-font-smoothing:antialiased;
+        -moz-osx-font-smoothing:grayscale;
+        line-height:1.5;
+        padding-top:72px; /* space for sticky nav */
+      }
+      a{color:inherit;text-decoration:none}
+      img{max-width:100%;height:auto;display:block}
+      .container{max-width:var(--max-width);margin:0 auto;padding:2rem}
+
+      /* ---------- NAV ---------- */
+      nav#navbar{
+        position:fixed;left:0;right:0;top:0;z-index:60;
+        backdrop-filter: blur(6px);
+        background: linear-gradient(180deg, rgba(7,13,26,0.6), rgba(7,13,26,0.35));
+        border-bottom: 1px solid rgba(255,255,255,0.03);
+      }
+      .nav-container{max-width:var(--max-width);margin:0 auto;display:flex;align-items:center;justify-content:space-between;padding:1rem}
+      .logo{font-weight:800;font-family:'Montserrat',sans-serif;font-size:1.05rem;letter-spacing:0.6px}
+      .nav-links{list-style:none;display:flex;gap:1rem;align-items:center}
+      .nav-links a{padding:0.55rem 0.6rem;border-radius:8px;color:var(--muted);font-weight:600}
+      .nav-links a:hover{background:var(--glass);color:white}
+
+      /* mobile menu */
+      .menu-toggle{display:none;cursor:pointer;width:40px;height:36px;align-items:center;justify-content:center}
+      .menu-toggle span{display:block;height:2px;background:var(--muted);margin:5px 0;border-radius:2px;transition:all .25s}
+
+      /* ---------- HERO ---------- */
+      .hero{
+        min-height:62vh;display:flex;align-items:center;justify-content:center;padding:3rem 1rem 4rem;position:relative;background-image:url('https://picsum.photos/id/1011/1600/900');background-size:cover;background-position:center;border-bottom:1px solid rgba(255,255,255,0.03)
+      }
+      .hero::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg, rgba(2,6,23,0.35), rgba(2,6,23,0.6));}
+      .hero-content{position:relative;z-index:2;max-width:1000px;text-align:center;padding:2rem;border-radius:14px}
+      .hero h1{font-family:'Montserrat',sans-serif;font-size:2.1rem;margin-bottom:.6rem}
+      .subtitle{color:var(--muted);font-weight:500;margin-bottom:1.2rem}
+      .countdown{display:flex;gap:1rem;justify-content:center;margin:1rem 0 1.6rem}
+      .countdown-item{background:rgba(255,255,255,0.03);padding:.65rem 0.9rem;border-radius:10px;min-width:72px}
+      .countdown-item span{display:block;font-weight:700;font-size:1.05rem;text-align:center}
+      .countdown-item p{font-size:.8rem;color:var(--muted);text-align:center;margin-top:6px}
+      .cta-button{display:inline-block;padding:.7rem 1.05rem;border-radius:10px;background:linear-gradient(90deg,var(--accent),var(--accent-2));color:#021022;font-weight:700}
+      .cta-button:hover{transform:translateY(-3px)}
+
+      /* ---------- ABOUT ---------- */
+      .section-title{font-family:'Montserrat',sans-serif;font-size:1.4rem;margin-bottom:.4rem}
+      .section-subtitle{color:var(--muted);margin-bottom:1rem}
+      .about-content{display:grid;grid-template-columns:1fr 360px;gap:var(--gap);align-items:start}
+      .about-text h3{margin-bottom:.4rem}
+      .about-text p{color:var(--muted);margin-bottom:.6rem}
+      .about-features{display:grid;gap:.7rem}
+      .feature-item{background:rgba(255,255,255,0.02);padding:1rem;border-radius:10px}
+
+      /* ---------- TIMELINE ---------- */
+      .timeline{display:flex;flex-direction:column;gap:1rem;margin-top:1rem}
+      .timeline-item{display:flex;gap:1rem;align-items:flex-start}
+      .timeline-dot{width:12px;height:12px;background:var(--accent);border-radius:50%;margin-top:6px;flex:0 0 12px}
+      .timeline-content h3{font-size:1.05rem}
+      .time{color:var(--muted);font-size:.9rem;margin-bottom:.4rem}
+
+      /* ---------- GALLERY ---------- */
+      .gallery-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:0.8rem;margin-top:1rem}
+      .gallery-item{position:relative;overflow:hidden;border-radius:10px;min-height:160px}
+      .gallery-item img{width:100%;height:100%;object-fit:cover;transition:transform .6s ease}
+      .gallery-item:hover img{transform:scale(1.06)}
+      .gallery-overlay{position:absolute;left:0;right:0;bottom:0;padding:0.95rem;background:linear-gradient(180deg, rgba(2,6,23,0), rgba(2,6,23,0.7));color:white}
+      .gallery-overlay h4{margin-bottom:0.25rem}
+      .gallery-overlay p{font-size:.85rem;color:rgba(255,255,255,0.85)}
+
+      /* ---------- REGISTER ---------- */
+      section#register{background:linear-gradient(180deg, #071323, #031024);padding:3rem 0;border-top:1px solid rgba(255,255,255,0.03)}
+      .register-form{display:grid;grid-template-columns:1fr 360px;gap:1rem;align-items:start}
+      .form-group{display:flex;flex-direction:column;margin-bottom:0.4rem}
+      label{font-weight:600;margin-bottom:.35rem}
+      input[type=text],input[type=email],input[type=tel],select{background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.04);padding:.65rem;border-radius:8px;color:var(--muted)}
+      .submit-row{display:flex;justify-content:flex-start;align-items:center;margin-top:.6rem}
+      button[type=submit]{background:linear-gradient(90deg,var(--accent),var(--accent-2));border:none;padding:.75rem 1rem;border-radius:10px;font-weight:700;cursor:pointer}
+      button[type=submit]:hover{transform:translateY(-2px)}
+
+      /* ---------- Responsive ---------- */
+      @media(max-width:980px){
+        .about-content{grid-template-columns:1fr}
+        .gallery-grid{grid-template-columns:repeat(2,1fr)}
+        .register-form{grid-template-columns:1fr}
+      }
+      @media(max-width:720px){
+        .nav-links{display:none}
+        .menu-toggle{display:flex}
+        nav.open .nav-links{display:flex;position:absolute;left:0;right:0;top:64px;flex-direction:column;background:linear-gradient(180deg, rgba(2,6,23,0.95), rgba(2,6,23,0.98));padding:1rem;border-bottom-left-radius:12px;border-bottom-right-radius:12px}
+        .hero{padding:4rem 1rem}
+        .hero h1{font-size:1.6rem}
+      }
+
+      /* small helper */
+      .muted{color:var(--muted)}
+    </style>
+  </head>
+
+  <body>
+    <!-- NAV -->
+    <nav id="navbar">
+      <div class="nav-container">
+        <a href="#home" class="logo">IS CAMP 2025</a>
+        <div class="menu-toggle" id="menuToggle" aria-label="Toggle menu" aria-expanded="false">
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+        <ul class="nav-links" id="navLinks">
+          <li><a href="#home">Home</a></li>
+          <li><a href="#about">About</a></li>
+          <li><a href="#schedule">Schedule</a></li>
+          <li><a href="#gallery">Gallery</a></li>
+          <li><a href="#register">Register</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </div>
+    </nav>
+
+    <!-- HERO -->
+    <section class="hero" id="home">
+      <div class="hero-content container">
+        <h1>Information System Training Camp 2025</h1>
+        <p class="subtitle">Transform Your Future · Level Up Your Skills</p>
+
+        <div class="countdown" id="countdown" aria-hidden="false">
+          <div class="countdown-item">
+            <span id="days">00</span>
+            <p>Days</p>
+          </div>
+          <div class="countdown-item">
+            <span id="hours">00</span>
+            <p>Hours</p>
+          </div>
+          <div class="countdown-item">
+            <span id="minutes">00</span>
+            <p>Minutes</p>
+          </div>
+          <div class="countdown-item">
+            <span id="seconds">00</span>
+            <p>Seconds</p>
+          </div>
+        </div>
+
+        <a href="#register" class="cta-button">Register Now!</a>
+      </div>
+    </section>
+
+    <!-- ABOUT -->
+    <section id="about">
+      <div class="container">
+        <h2 class="section-title">About The Camp</h2>
+        <p class="section-subtitle">An intensive training program designed to elevate your skills</p>
+
+        <div class="about-content">
+          <div class="about-text">
+            <h3>🎯 Our Mission</h3>
+            <p>The Information System Training Camp is a comprehensive program designed to equip students with essential technical and soft skills needed in today's competitive IT industry.</p>
+            <p>Through hands-on workshops, expert-led sessions, and collaborative projects, participants will gain practical experience and build lasting connections with peers and industry professionals.</p>
+
+            <h3 style="margin-top: 1.2rem">🎓 Expected Outcomes</h3>
+            <p class="muted">✅ Master essential programming and system design concepts</p>
+            <p class="muted">✅ Develop real-world project experience</p>
+            <p class="muted">✅ Build a professional network</p>
+            <p class="muted">✅ Enhance problem-solving and teamwork skills</p>
+          </div>
+
+          <aside class="about-features" aria-hidden="false">
+            <div class="feature-item">
+              <h4>🚀 Intensive Training</h4>
+              <p class="muted">3 days of immersive learning with industry experts</p>
+            </div>
+            <div class="feature-item">
+              <h4>💻 Hands-on Projects</h4>
+              <p class="muted">Build real applications and solutions</p>
+            </div>
+            <div class="feature-item">
+              <h4>🤝 Networking</h4>
+              <p class="muted">Connect with professionals and peers</p>
+            </div>
+            <div class="feature-item">
+              <h4>🏆 Certification</h4>
+              <p class="muted">Receive official training completion certificate</p>
+            </div>
+          </aside>
+        </div>
+      </div>
+    </section>
+
+    <!-- SCHEDULE -->
+    <section id="schedule">
+      <div class="container">
+        <h2 class="section-title">Training Schedule</h2>
+        <p class="section-subtitle">A comprehensive 3-day program packed with learning and activities</p>
+
+        <div class="timeline">
+          <div class="timeline-item">
+            <div class="timeline-dot" aria-hidden="true"></div>
+            <div class="timeline-content">
+              <h3>Day 1: Foundation & Orientation</h3>
+              <p class="time">8:00 AM - 6:00 PM</p>
+              <p>Opening ceremony, team formation, introduction to Information Systems fundamentals, and ice-breaking activities</p>
+            </div>
+          </div>
+
+          <div class="timeline-item">
+            <div class="timeline-dot"></div>
+            <div class="timeline-content">
+              <h3>Day 2: Technical Workshops</h3>
+              <p class="time">8:00 AM - 9:00 PM</p>
+              <p>Database design, system architecture, web development workshops, and hands-on coding sessions</p>
+            </div>
+          </div>
+
+          <div class="timeline-item">
+            <div class="timeline-dot"></div>
+            <div class="timeline-content">
+              <h3>Day 2 Evening: Team Building</h3>
+              <p class="time">7:00 PM - 10:00 PM</p>
+              <p>Outdoor activities, team challenges, and networking dinner</p>
+            </div>
+          </div>
+
+          <div class="timeline-item">
+            <div class="timeline-dot"></div>
+            <div class="timeline-content">
+              <h3>Day 3: Project & Presentation</h3>
+              <p class="time">8:00 AM - 5:00 PM</p>
+              <p>Final project development, team presentations, judging, and closing ceremony with awards</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- GALLERY -->
+    <section id="gallery">
+      <div class="container">
+        <h2 class="section-title">Gallery</h2>
+        <p class="section-subtitle">Moments from previous training camps</p>
+
+        <div class="gallery-grid" aria-live="polite">
+
+          <figure class="gallery-item">
+            <img src="https://picsum.photos/id/1012/1200/800" alt="Team Collaboration" loading="lazy" />
+            <figcaption class="gallery-overlay">
+              <h4>Team Collaboration</h4>
+              <p>Working together on projects</p>
+            </figcaption>
+          </figure>
+
+          <figure class="gallery-item">
+            <img src="https://picsum.photos/id/1005/1200/800" alt="Workshop Session" loading="lazy" />
+            <figcaption class="gallery-overlay">
+              <h4>Technical Workshops</h4>
+              <p>Learning from industry experts</p>
+            </figcaption>
+          </figure>
+
+          <figure class="gallery-item">
+            <img src="https://picsum.photos/id/1001/1200/800" alt="Presentation" loading="lazy" />
+            <figcaption class="gallery-overlay">
+              <h4>Project Presentations</h4>
+              <p>Showcasing final projects</p>
+            </figcaption>
+          </figure>
+
+          <figure class="gallery-item">
+            <img src="https://picsum.photos/id/1027/1200/800" alt="Networking" loading="lazy" />
+            <figcaption class="gallery-overlay">
+              <h4>Networking Events</h4>
+              <p>Building lasting connections</p>
+            </figcaption>
+          </figure>
+
+          <figure class="gallery-item">
+            <img src="https://picsum.photos/id/1033/1200/800" alt="Team Activities" loading="lazy" />
+            <figcaption class="gallery-overlay">
+              <h4>Team Building</h4>
+              <p>Fun outdoor activities</p>
+            </figcaption>
+          </figure>
+
+          <figure class="gallery-item">
+            <img src="https://picsum.photos/id/1060/1200/800" alt="Coding Session" loading="lazy" />
+            <figcaption class="gallery-overlay">
+              <h4>Hands-on Coding</h4>
+              <p>Building real solutions</p>
+            </figcaption>
+          </figure>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- REGISTER -->
+    <section id="register">
+      <div class="container">
+        <h2 class="section-title" style="color: white">Register Now</h2>
+        <p class="section-subtitle" style="color: rgba(255, 255, 255, 0.8)">Secure your spot in IS Training Camp 2025</p>
+
+        <form class="register-form" id="registrationForm" onsubmit="handleSubmit(event)">
+          <div>
+            <div class="form-group">
+              <label for="fullName">Full Name *</label>
+              <input type="text" id="fullName" name="fullName" required placeholder="Enter your full name" />
+            </div>
+
+            <div class="form-group">
+              <label for="email">Email Address *</label>
+              <input type="email" id="email" name="email" required placeholder="your.email@example.com" />
+            </div>
+
+            <div class="form-group">
+              <label for="phone">Phone Number *</label>
+              <input type="tel" id="phone" name="phone" required placeholder="+84 xxx xxx xxx" />
+            </div>
+
+            <div class="form-group">
+              <label for="university">University/College *</label>
+              <input type="text" id="university" name="university" required placeholder="Your institution" />
+            </div>
+
+            <div class="form-group">
+              <label for="year">Year of Study *</label>
+              <select id="year" name="year" required>
+                <option value="">Select year</option>
+                <option value="1">Year 1</option>
+                <option value="2">Year 2</option>
+                <option value="3">Year 3</option>
+                <option value="4">Year 4</option>
+                <option value="other">Other</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="notes">Extra Notes (optional)</label>
+              <input type="text" id="notes" name="notes" placeholder="Allergies / Preferences / Team mates" />
+            </div>
+          </div>
+
+          <aside style="background:rgba(255,255,255,0.02);padding:1rem;border-radius:10px">
+            <h4 style="margin-bottom:.6rem">Quick Summary</h4>
+            <p class="muted">• 3 days intensive training · hands-on projects · certificate</p>
+            <p class="muted" style="margin-top:.6rem">• Fee: (update here)</p>
+
+            <div class="submit-row" style="margin-top:1rem">
+              <button type="submit">Submit Registration</button>
+            </div>
+          </aside>
+
+        </form>
+      </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer style="padding:2rem 0;margin-top:2rem;border-top:1px solid rgba(255,255,255,0.03)">
+      <div class="container" style="display:flex;justify-content:space-between;align-items:center;gap:1rem;flex-wrap:wrap">
+        <div>
+          <strong>IS CAMP 2025</strong>
+          <p class="muted" style="margin-top:.35rem">Contact: info@iscamp.example · +84 123 456 789</p>
+        </div>
+        <div class="muted">© 2025 Information System Training Camp</div>
+      </div>
+    </footer>
+
+    <script>
+      // Mobile menu toggle
+      const navbar = document.getElementById('navbar');
+      const menuToggle = document.getElementById('menuToggle');
+      menuToggle.addEventListener('click', () => {
+        const expanded = menuToggle.getAttribute('aria-expanded') === 'true';
+        menuToggle.setAttribute('aria-expanded', String(!expanded));
+        navbar.classList.toggle('open');
+      });
+
+      // Smooth scroll for anchor links
+      document.querySelectorAll('a[href^="#"]').forEach(a=>{
+        a.addEventListener('click', (e)=>{
+          const target = document.querySelector(a.getAttribute('href'));
+          if(target){
+            e.preventDefault();
+            target.scrollIntoView({behavior:'smooth',block:'start'});
+          }
+        })
+      })
+
+      // Countdown (edit this date to match your event) — default: Nov 1, 2025 09:00 local
+      const eventDate = new Date('2025-11-01T09:00:00');
+      function updateCountdown(){
+        const now = new Date();
+        const diff = eventDate - now;
+        if(diff <= 0){
+          document.getElementById('countdown').innerHTML = '<div style="color:var(--muted)">Event started</div>';
+          clearInterval(countdownInterval);
+          return;
+        }
+        const days = Math.floor(diff / (1000*60*60*24));
+        const hours = Math.floor((diff / (1000*60*60)) % 24);
+        const minutes = Math.floor((diff / (1000*60)) % 60);
+        const seconds = Math.floor((diff / 1000) % 60);
+        document.getElementById('days').textContent = String(days).padStart(2,'0');
+        document.getElementById('hours').textContent = String(hours).padStart(2,'0');
+        document.getElementById('minutes').textContent = String(minutes).padStart(2,'0');
+        document.getElementById('seconds').textContent = String(seconds).padStart(2,'0');
+      }
+      const countdownInterval = setInterval(updateCountdown, 1000);
+      updateCountdown();
+
+      // Basic form handler (demo) — replace with real endpoint integration
+      function handleSubmit(e){
+        e.preventDefault();
+        const form = e.target;
+        const data = new FormData(form);
+        // Basic validation example
+        if(!data.get('fullName') || !data.get('email')){
+          alert('Please fill required fields');
+          return;
+        }
+        // For demo just show success
+        alert('Thanks! Your registration was submitted. (Demo-mode)');
+        form.reset();
+      }
+    </script>
+  </body>
+</html>
